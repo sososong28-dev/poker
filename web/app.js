@@ -161,6 +161,25 @@ const navItems = [
 
 const ranks = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
 const positions = ["UTG", "LJ", "HJ", "CO", "BTN", "SB", "BB"];
+let memoryHistory = [];
+
+function readHistory() {
+  try {
+    const raw = window.localStorage?.getItem("pokerTrainerHistory");
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return memoryHistory;
+  }
+}
+
+function writeHistory(records) {
+  memoryHistory = [...records];
+  try {
+    window.localStorage?.setItem("pokerTrainerHistory", JSON.stringify(records));
+  } catch {
+    // Some file:// WebView contexts block localStorage. Keep the session in memory.
+  }
+}
 
 const state = {
   view: "home",
@@ -170,7 +189,7 @@ const state = {
   adviceOpen: true,
   botBattle: false,
   rangePosition: 4,
-  history: JSON.parse(localStorage.getItem("pokerTrainerHistory") || "[]")
+  history: readHistory()
 };
 
 const nav = document.getElementById("nav");
@@ -208,7 +227,7 @@ function showView(view) {
 }
 
 function persist() {
-  localStorage.setItem("pokerTrainerHistory", JSON.stringify(state.history));
+  writeHistory(state.history);
 }
 
 function render() {
@@ -344,6 +363,7 @@ function renderBot() {
 }
 
 function renderTraining() {
+  updateShell();
   setHeader(state.botBattle ? "人机实战" : "推荐决策训练", "完成行动后查看反馈，可打开实时复盘或进入下一手。");
   viewRoot.innerHTML = document.getElementById("trainingTemplate").innerHTML;
   const hand = currentHand();

@@ -31,7 +31,7 @@ APK 文件：
 
 ## Web 版本测试
 
-测试方式：本地静态 HTTP 服务 + Node 校验。
+测试方式：本地静态 HTTP 服务 + Codex in-app browser 点击流 + Node 校验。
 
 网页入口：
 
@@ -44,11 +44,11 @@ APK 文件：
 - JS 关键模块存在：`renderTraining`、`renderRange`、`renderReview`、`renderAnalytics`、`drawTable`。
 - CSS 关键布局存在：`.training-layout`。
 - HTTP 静态加载通过：`/`、`/styles.css`、`/app.js` 均返回 200。
+- 点击“开始训练”后进入训练桌，显示 Canvas 牌桌和 4 个行动按钮。
+- 点击“加注 2400”后显示“正确决策”反馈，并出现“打开复盘”和“下一手”按钮。
+- 左侧训练统计从 0 手牌更新为 1 手牌，正确率更新为 100%。
+- 浏览器控制台无 error / warn。
+- 已增加 `file://` 本地打开时的存储降级：如果 WebView 禁止 `localStorage`，训练记录会保存在当前内存会话，页面不会因存储权限中断初始化。
+- HTML 已给 `styles.css` 和 `app.js` 加版本参数，避免浏览器继续使用旧缓存导致“开始训练”按钮无响应。
 
-限制：
-
-- 当前环境 Playwright 入口可见但缺少 `playwright-core` 依赖，未执行完整无头浏览器点击流。
-- 已完成静态结构、JS 语法和 HTTP 加载校验。
-
-结论：Android 版本完整流程通过；网页版本静态可运行性检查通过。
-
+结论：Android 版本完整流程通过；网页版本完整开始训练与行动反馈流程通过。

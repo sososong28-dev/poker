@@ -15,6 +15,11 @@
 - 直接双击打开 `web/index.html`
 - 或用任意静态服务器托管 `web/` 目录
 
+说明：
+
+- 网页已处理 `file://` 本地打开时部分 WebView 禁止 `localStorage` 的情况；即使本地存储不可用，按钮和训练流程仍会正常初始化。
+- `index.html` 对 CSS/JS 使用版本参数，避免浏览器缓存旧脚本导致按钮无响应。
+
 网页功能：
 
 - 训练大厅
@@ -61,7 +66,7 @@ Manifest：
 当前测试结论：
 
 - Android：主页、学习页、模式页、范围页、人机实战、训练桌、建议开关、反馈、复盘、下一手、统计页、排行榜全部通过。
-- Web：JS 语法检查、静态结构检查、HTTP 静态资源加载检查通过。
+- Web：JS 语法检查、静态结构检查、HTTP 静态资源加载、开始训练点击流、行动反馈和统计更新全部通过。
 - Android crash log 为空。
 
 ## 构建说明
@@ -69,4 +74,3 @@ Manifest：
 `scripts/rebuild-from-workspace.ps1` 可在原 Codex 工作区中复用现有 Android SDK、JDK 和 debug keystore 重新打包 Android APK。
 
 网页版本不需要构建步骤，`web/` 是纯静态文件。
-
