@@ -1,0 +1,22 @@
+# Android / Java build outputs
+trainer_native/build/
+*.class
+*.dex
+*.idsig
+
+# Local toolchains and generated work dirs
+android-sdk/
+tools/
+pydeps/
+apk_unpacked/
+decoded/
+fixed_unpacked/
+normal_unpacked/
+build/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
