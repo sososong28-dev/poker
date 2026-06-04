@@ -332,6 +332,53 @@ button {
   margin-top: 14px;
 }
 
+.flow-progress {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.progress-dot {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--panel-2);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.progress-dot.done {
+  border-color: rgba(37, 164, 103, 0.75);
+  color: var(--green);
+}
+
+.progress-dot.current {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: #1a221a;
+}
+
+.last-feedback {
+  border-left: 4px solid var(--line);
+}
+
+.last-feedback.is-good {
+  border-left-color: var(--green);
+}
+
+.last-feedback.is-leak {
+  border-left-color: var(--red);
+}
+
+.last-feedback small {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+}
+
 .factor-chip,
 .legend-chip {
   border: 1px solid var(--line);
@@ -344,7 +391,7 @@ button {
 
 .action-row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
   margin-top: 16px;
 }

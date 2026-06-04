@@ -12,7 +12,7 @@
 
 - `web/index.html`：静态网页入口。
 - `web/styles.css`：网页样式。
-- `web/app.js`：网页训练器逻辑、牌桌 Canvas 绘制、范围矩阵、复盘和统计。
+- `web/app.js`：网页训练器逻辑、完整四街牌局流程、牌桌 Canvas 绘制、范围矩阵、复盘和统计。
 
 ## Release
 
@@ -26,4 +26,3 @@
 ## 注意
 
 本仓库没有包含 Android SDK、JDK、build-tools 这类大型工具链。安装 APK 或运行网页不需要这些工具；只有重新打包 Android APK 时才需要。
-

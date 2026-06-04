@@ -159,6 +159,220 @@ const navItems = [
   ["leaderboard", "排行榜", "本地"]
 ];
 
+const handFlows = [
+  {
+    title: "BTN 对 BB | AQs 完整牌局",
+    mode: "现金局 / 6 人桌 / 100bb",
+    heroPosition: "BTN",
+    heroCards: ["Ac", "Qc"],
+    stack: 10000,
+    spots: [
+      {
+        street: "翻前",
+        board: [],
+        pot: 150,
+        villainAction: "前面玩家全部弃牌，轮到 BTN 行动",
+        goal: "从按钮位用位置优势构建盈利开池范围。",
+        actions: [
+          { label: "弃牌", amount: "0" },
+          { label: "加注", amount: "250" },
+          { label: "全下", amount: "10000" }
+        ],
+        recommendedIndex: 1,
+        recommendation: "加注 250",
+        winRate: "49%",
+        mix: "弃牌 0% / 加注 100% / 全下 0%",
+        ev: "-0.45 / +0.72 / -2.30",
+        evLoss: "-1.2 EV",
+        errorType: "翻前过紧",
+        advice: "AQs 在按钮位是高频开池。弃牌会损失位置红利，全下则让价值牌变成低 EV 极端线路。",
+        drill: "后位强 Broadway 同花牌优先标准开池，不要跳过可控底池的盈利机会。",
+        botLine: "机器人盲注防守偏被动，标准开池能稳定拿到位置优势。",
+        rangeNote: "按钮位范围最宽，AQs 属于核心价值开池。",
+        factors: ["位置优势", "高牌权益", "同花潜力", "可控底池"]
+      },
+      {
+        street: "翻牌",
+        board: ["Ts", "8d", "3c"],
+        pot: 600,
+        villainAction: "BB 过牌",
+        goal: "在干湿混合牌面上识别后门权益和范围压力。",
+        actions: [
+          { label: "过牌", amount: "0" },
+          { label: "下注", amount: "220" },
+          { label: "下注", amount: "480" }
+        ],
+        recommendedIndex: 1,
+        recommendation: "下注 220",
+        winRate: "34%",
+        mix: "过牌 38% / 小注 54% / 大注 8%",
+        ev: "+0.12 / +0.48 / +0.05",
+        evLoss: "-0.8 EV",
+        errorType: "尺度过大",
+        advice: "AQ 高牌加后门坚果同花阻断牌适合小尺度范围下注。大注会让空气牌投入过多。",
+        drill: "有范围优势但未成牌时，优先用小尺度压迫宽防守范围。",
+        botLine: "机器人面对小注继续过宽，后续街道仍有剥削空间。",
+        rangeNote: "Ac 阻断后门坚果同花，Q 高牌保留转牌权益。",
+        factors: ["范围下注", "后门权益", "阻断牌", "小尺度"]
+      },
+      {
+        street: "转牌",
+        board: ["Ts", "8d", "3c", "2c"],
+        pot: 1040,
+        villainAction: "BB Probe 下注 520",
+        goal: "面对过宽 Probe 时，用阻断牌和权益做反击。",
+        actions: [
+          { label: "弃牌", amount: "0" },
+          { label: "跟注", amount: "520" },
+          { label: "加注", amount: "1500" },
+          { label: "全下", amount: "9300" }
+        ],
+        recommendedIndex: 2,
+        recommendation: "加注 1500",
+        winRate: "31%",
+        mix: "弃牌 8% / 跟注 37% / 加注 55% / 全下 0%",
+        ev: "0.00 / -0.25 / +0.95 / -1.20",
+        evLoss: "-1.4 EV",
+        errorType: "过度跟注",
+        advice: "转牌拿到坚果同花听牌和高张阻断牌，面对过宽 Probe 可以加注获取弃牌率并保护权益。",
+        drill: "当权益和弃牌率同时提升时，优先主动加注。",
+        botLine: "机器人转牌 Probe 过宽，但面对加注弃牌偏多。",
+        rangeNote: "AcQc 在转牌同时拥有同花听牌、阻断牌和位置优势。",
+        factors: ["坚果听牌", "转牌反击", "弃牌率", "阻断牌优势"]
+      },
+      {
+        street: "河牌",
+        board: ["Ts", "8d", "3c", "2c", "7h"],
+        pot: 4040,
+        villainAction: "BB 跟注后河牌过牌",
+        goal: "错过听牌后判断是否继续诈唬，避免无目标开火。",
+        actions: [
+          { label: "过牌", amount: "0" },
+          { label: "下注", amount: "1100" },
+          { label: "下注", amount: "2800" }
+        ],
+        recommendedIndex: 0,
+        recommendation: "随后过牌",
+        winRate: "18%",
+        mix: "过牌 68% / 小注 7% / 大注 25%",
+        ev: "+0.05 / -0.42 / -0.10",
+        evLoss: "-0.9 EV",
+        errorType: "河牌过度诈唬",
+        advice: "听牌错过后仍有 A 高摊牌价值。对手转牌跟注后范围更强，低质量河牌继续开火收益不足。",
+        drill: "错过听牌不等于必须诈唬；先确认对手有足够弃牌目标。",
+        botLine: "机器人河牌跟注偏紧但转牌跟注范围偏强，低频放弃更稳。",
+        rangeNote: "A 高有少量摊牌价值，但缺少强阻断目标。",
+        factors: ["摊牌价值", "弃牌目标", "河牌纪律", "完整牌局收束"]
+      }
+    ]
+  },
+  {
+    title: "BB 对 CO | 98s 防守完整牌局",
+    mode: "现金局 / 6 人桌 / 100bb",
+    heroPosition: "BB",
+    heroCards: ["9s", "8s"],
+    stack: 9600,
+    spots: [
+      {
+        street: "翻前",
+        board: [],
+        pot: 400,
+        villainAction: "CO 开池 250，其他玩家弃牌",
+        goal: "用大盲防守范围保留可玩性组合。",
+        actions: [
+          { label: "弃牌", amount: "0" },
+          { label: "跟注", amount: "150" },
+          { label: "加注", amount: "950" }
+        ],
+        recommendedIndex: 1,
+        recommendation: "跟注 150",
+        winRate: "38%",
+        mix: "弃牌 10% / 跟注 78% / 加注 12%",
+        ev: "-0.35 / +0.28 / +0.05",
+        evLoss: "-0.8 EV",
+        errorType: "大盲弃牌过多",
+        advice: "98s 有连通性和同花潜力，面对 CO 标准开池可以大盲跟注防守。",
+        drill: "大盲已投入盲注，防守时要计算补价和翻后可玩性。",
+        botLine: "机器人 CO 开池范围偏宽，BB 可以保留更多同花连张。",
+        rangeNote: "98s 属于大盲可防守的高可玩性组合。",
+        factors: ["补价", "连通性", "同花潜力", "范围防守"]
+      },
+      {
+        street: "翻牌",
+        board: ["Js", "Ts", "3d"],
+        pot: 650,
+        villainAction: "CO 持续下注 330",
+        goal: "强听牌不要被动放弃，利用权益和弃牌率反击。",
+        actions: [
+          { label: "弃牌", amount: "0" },
+          { label: "跟注", amount: "330" },
+          { label: "加注", amount: "1150" }
+        ],
+        recommendedIndex: 2,
+        recommendation: "加注 1150",
+        winRate: "46%",
+        mix: "弃牌 0% / 跟注 44% / 加注 56%",
+        ev: "-1.80 / +0.25 / +0.95",
+        evLoss: "-1.6 EV",
+        errorType: "错过半诈唬",
+        advice: "双头顺听加同花听牌有大量权益。对手持续下注范围宽时，加注能产生弃牌率并构建大底池。",
+        drill: "强听牌在有弃牌率时优先主动进攻。",
+        botLine: "机器人面对翻牌加注继续范围偏窄。",
+        rangeNote: "9s8s 在 JTs3d 上是高权益听牌。",
+        factors: ["强听牌", "半诈唬", "弃牌率", "权益兑现"]
+      },
+      {
+        street: "转牌",
+        board: ["Js", "Ts", "3d", "2c"],
+        pot: 2950,
+        villainAction: "CO 跟注后转牌过牌",
+        goal: "半诈唬被跟注后，继续评估权益和压力。",
+        actions: [
+          { label: "过牌", amount: "0" },
+          { label: "下注", amount: "1450" },
+          { label: "全下", amount: "8120" }
+        ],
+        recommendedIndex: 1,
+        recommendation: "下注 1450",
+        winRate: "39%",
+        mix: "过牌 31% / 下注 62% / 全下 7%",
+        ev: "+0.10 / +0.70 / -0.55",
+        evLoss: "-1.0 EV",
+        errorType: "转牌放弃过早",
+        advice: "转牌低张没有明显改善对手范围，你仍有大量河牌补牌和弃牌率，适合中等尺度继续施压。",
+        drill: "翻牌主动加注后，空白转牌通常需要保留连续压力。",
+        botLine: "机器人在转牌面对持续压力会弃掉一部分顶对弱踢脚和中等对子。",
+        rangeNote: "98s 保留顺子和同花大量 outs。",
+        factors: ["连续压力", "空白转牌", "听牌权益", "尺度控制"]
+      },
+      {
+        street: "河牌",
+        board: ["Js", "Ts", "3d", "2c", "Qh"],
+        pot: 5850,
+        villainAction: "CO 跟注后河牌过牌",
+        goal: "完成顺子后选择可被更差牌支付的价值尺度。",
+        actions: [
+          { label: "过牌", amount: "0" },
+          { label: "下注", amount: "2200" },
+          { label: "全下", amount: "6670" }
+        ],
+        recommendedIndex: 1,
+        recommendation: "下注 2200",
+        winRate: "82%",
+        mix: "过牌 0% / 下注 74% / 全下 26%",
+        ev: "+0.90 / +2.40 / +1.65",
+        evLoss: "-1.3 EV",
+        errorType: "错过价值下注",
+        advice: "河牌 Q 完成顺子。中等尺度能让两对、顶对和部分强 Jx 支付；全下会压掉较多更差牌。",
+        drill: "完成强牌后优先寻找能被更差牌跟注的价值尺度。",
+        botLine: "机器人河牌面对中等下注跟注偏宽，价值下注收益更高。",
+        rangeNote: "98s 完成 Q 高顺子，是清晰价值下注。",
+        factors: ["价值下注", "尺度选择", "顺子完成", "支付目标"]
+      }
+    ]
+  }
+];
+
 const ranks = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
 const positions = ["UTG", "LJ", "HJ", "CO", "BTN", "SB", "BB"];
 let memoryHistory = [];
@@ -181,15 +395,24 @@ function writeHistory(records) {
   }
 }
 
+function completedHandsFrom(records) {
+  return records.filter((record) => record.handComplete).length;
+}
+
+const initialHistory = readHistory();
+
 const state = {
   view: "home",
-  handIndex: 0,
+  flowIndex: 0,
+  streetIndex: 0,
+  handNumber: completedHandsFrom(initialHistory) + 1,
   awaiting: true,
   selectedAction: -1,
+  lastFeedback: null,
   adviceOpen: true,
   botBattle: false,
   rangePosition: 4,
-  history: readHistory()
+  history: initialHistory
 };
 
 const nav = document.getElementById("nav");
@@ -200,6 +423,8 @@ const viewSubtitle = document.getElementById("viewSubtitle");
 document.getElementById("quickStartBtn").addEventListener("click", () => startTraining(false, 0));
 document.getElementById("resetSessionBtn").addEventListener("click", () => {
   state.history = [];
+  state.handNumber = 1;
+  state.lastFeedback = null;
   persist();
   render();
 });
@@ -250,7 +475,7 @@ function updateShell() {
   document.querySelectorAll(".nav-button").forEach((button) => {
     button.classList.toggle("active", button.dataset.view === state.view);
   });
-  document.getElementById("navHands").textContent = state.history.length;
+  document.getElementById("navHands").textContent = completedHands();
   document.getElementById("navAccuracy").textContent = `${accuracy()}%`;
   document.getElementById("navLeak").textContent = mainLeak();
 }
@@ -263,9 +488,11 @@ function setHeader(title, subtitle) {
 function startTraining(bot, index) {
   state.view = "training";
   state.botBattle = bot;
-  state.handIndex = index;
+  state.flowIndex = flowFromSeed(index);
+  state.streetIndex = 0;
   state.awaiting = true;
   state.selectedAction = -1;
+  state.lastFeedback = null;
   render();
 }
 
@@ -273,9 +500,9 @@ function renderHome() {
   setHeader("训练大厅", "选择学习、专项练习、范围查看、人机实战或直接开始训练。");
   viewRoot.innerHTML = `
     <section class="metric-row">
-      ${metric("本轮手牌", state.history.length)}
+      ${metric("完整牌局", completedHands())}
+      ${metric("训练决策", state.history.length)}
       ${metric("正确率", `${accuracy()}%`)}
-      ${metric("EV 汇总", totalEv())}
       ${metric("主要漏洞", mainLeak())}
     </section>
     <section class="dashboard-grid">
@@ -329,7 +556,7 @@ function studyCard(title, body) {
 }
 
 function renderModes() {
-  setHeader("练习模式", "选择专项节点，进入对应训练手牌。");
+  setHeader("练习模式", "选择专项主题，进入完整牌局连续训练。");
   const modes = [
     ["翻前范围", "BTN open、盲注防守、3-bet 频率。", 3],
     ["翻牌持续下注", "范围优势、听牌保护、IP/OOP 防守。", 1],
@@ -342,7 +569,7 @@ function renderModes() {
     <article class="card">
       <h3>${title}</h3>
       <p>${body}</p>
-      <div class="card-actions"><button class="primary-button" data-mode-start="${index}" type="button">开始</button></div>
+      <div class="card-actions"><button class="primary-button" data-mode-start="${index}" type="button">开始完整牌局</button></div>
     </article>
   `).join("")}</section>`;
   viewRoot.querySelectorAll("[data-mode-start]").forEach((button) => {
@@ -364,10 +591,11 @@ function renderBot() {
 
 function renderTraining() {
   updateShell();
-  setHeader(state.botBattle ? "人机实战" : "推荐决策训练", "完成行动后查看反馈，可打开实时复盘或进入下一手。");
+  const flow = currentFlow();
+  setHeader(state.botBattle ? "连续人机实战" : "完整牌局训练", "一手牌按翻前、翻牌、转牌、河牌连续推进，行动后不会停在中断面板。");
   viewRoot.innerHTML = document.getElementById("trainingTemplate").innerHTML;
   const hand = currentHand();
-  document.getElementById("spotMode").textContent = `训练场景 | ${hand.mode} | ${hand.street}`;
+  document.getElementById("spotMode").textContent = `第 ${state.handNumber} 手 | ${state.streetIndex + 1}/${flow.spots.length} | ${hand.mode} | ${hand.street}`;
   document.getElementById("toggleAdviceBtn").textContent = state.adviceOpen ? "建议开启" : "建议关闭";
   document.getElementById("toggleAdviceBtn").addEventListener("click", () => {
     state.adviceOpen = !state.adviceOpen;
@@ -383,8 +611,18 @@ function renderTraining() {
 
 function renderAdvisor(hand) {
   const content = document.getElementById("advisorContent");
+  const progress = flowProgress();
+  const feedback = state.lastFeedback ? `
+    <section class="advisor-block last-feedback ${state.lastFeedback.good ? "is-good" : "is-leak"}">
+      <h4>${state.lastFeedback.title}</h4>
+      <p>${state.lastFeedback.message}</p>
+      <small>${state.lastFeedback.next}</small>
+    </section>
+  ` : "";
   if (state.awaiting && state.adviceOpen) {
     content.innerHTML = `
+      ${progress}
+      ${feedback}
       ${advisorBlock("推荐行动", `${hand.recommendation} | 胜率 ${hand.winRate}`, "gold")}
       ${advisorBlock("GTO 频率", hand.mix, "blue")}
       ${advisorBlock("EV 对比", hand.ev)}
@@ -395,10 +633,25 @@ function renderAdvisor(hand) {
       <div class="factor-row">${hand.factors.map((f) => `<span class="factor-chip">${f}</span>`).join("")}</div>
     `;
   } else if (state.awaiting) {
-    content.innerHTML = advisorBlock("盲练模式", "建议已隐藏。先按自己的判断行动，之后再看复盘。");
+    content.innerHTML = `
+      ${progress}
+      ${feedback}
+      ${advisorBlock("盲练模式", "建议已隐藏。当前牌局仍会连续推进，完整复盘会记录每一街行动。")}
+    `;
   } else {
     content.innerHTML = advisorBlock("本手摘要", hand.rangeNote);
   }
+}
+
+function flowProgress() {
+  const flow = currentFlow();
+  return `<section class="flow-progress" aria-label="牌局进度">
+    ${flow.spots.map((spot, index) => `
+      <span class="progress-dot ${index < state.streetIndex ? "done" : ""} ${index === state.streetIndex ? "current" : ""}">
+        ${spot.street}
+      </span>
+    `).join("")}
+  </section>`;
 }
 
 function advisorBlock(title, body, cls = "") {
@@ -407,50 +660,52 @@ function advisorBlock(title, body, cls = "") {
 
 function renderActions(hand) {
   const row = document.getElementById("actionRow");
-  if (state.awaiting) {
-    row.className = "action-row";
-    row.innerHTML = hand.actions.map((action, index) => `
-      <button class="action-button" data-action="${index}" type="button">${action.label}<br>${action.amount}</button>
-    `).join("");
-    row.querySelectorAll("[data-action]").forEach((button) => {
-      button.addEventListener("click", () => chooseAction(Number(button.dataset.action)));
-    });
-  } else {
-    row.className = "feedback-panel";
-    const good = state.selectedAction === hand.recommendedIndex;
-    const selected = hand.actions[state.selectedAction];
-    row.innerHTML = `
-      <div>
-        <strong>${good ? "正确决策" : "建议复盘此手"}</strong>
-        <p class="muted-line">你的选择是 ${selected.label} ${selected.amount}。${good ? "符合推荐线路。" : `推荐线路：${hand.recommendation}。主要偏差：${hand.errorType}。`}</p>
-      </div>
-      <button class="ghost-button" id="reviewBtn" type="button">打开复盘</button>
-      <button class="primary-button" id="nextBtn" type="button">下一手</button>
-    `;
-    document.getElementById("reviewBtn").addEventListener("click", () => showView("review"));
-    document.getElementById("nextBtn").addEventListener("click", () => {
-      state.handIndex = (state.handIndex + 1) % hands.length;
-      state.awaiting = true;
-      state.selectedAction = -1;
-      renderTraining();
-    });
-  }
+  row.className = "action-row";
+  row.innerHTML = hand.actions.map((action, index) => `
+    <button class="action-button" data-action="${index}" type="button">${action.label}<br>${action.amount}</button>
+  `).join("");
+  row.querySelectorAll("[data-action]").forEach((button) => {
+    button.addEventListener("click", () => chooseAction(Number(button.dataset.action)));
+  });
 }
 
 function chooseAction(index) {
   const hand = currentHand();
+  const flow = currentFlow();
+  const isFinalStreet = state.streetIndex === flow.spots.length - 1;
+  const good = index === hand.recommendedIndex;
+  const selected = hand.actions[index];
   state.selectedAction = index;
-  state.awaiting = false;
   state.history.push({
-    title: hand.title,
+    title: `${flow.title} #${state.handNumber}`,
+    handTitle: flow.title,
+    handNo: state.handNumber,
     street: hand.street,
+    streetStep: `${state.streetIndex + 1}/${flow.spots.length}`,
     mode: hand.mode,
-    chosen: `${hand.actions[index].label} ${hand.actions[index].amount}`,
+    chosen: `${selected.label} ${selected.amount}`,
     best: hand.recommendation,
-    ev: index === hand.recommendedIndex ? "+0.9 EV" : hand.evLoss,
-    errorType: index === hand.recommendedIndex ? "正确线路" : hand.errorType,
-    reason: hand.advice
+    ev: good ? "+0.9 EV" : hand.evLoss,
+    errorType: good ? "正确线路" : hand.errorType,
+    reason: hand.advice,
+    handComplete: isFinalStreet
   });
+  state.lastFeedback = {
+    good,
+    title: `${hand.street}反馈`,
+    message: good
+      ? `你的选择 ${selected.label} ${selected.amount} 符合推荐线路。`
+      : `你的选择 ${selected.label} ${selected.amount} 偏离推荐，推荐线路是 ${hand.recommendation}，主要偏差：${hand.errorType}。`,
+    next: isFinalStreet ? "本手已完成，已自动进入下一手翻前。" : `已自动进入下一街：${flow.spots[state.streetIndex + 1].street}。`
+  };
+  if (isFinalStreet) {
+    state.flowIndex = (state.flowIndex + 1) % handFlows.length;
+    state.streetIndex = 0;
+    state.handNumber += 1;
+  } else {
+    state.streetIndex += 1;
+  }
+  state.awaiting = true;
   persist();
   renderTraining();
 }
@@ -525,13 +780,13 @@ function rangeSummary(pos) {
 function renderReview() {
   setHeader("实时复盘", "查看历史行动、最佳线路、EV 和错误类型。");
   if (!state.history.length) {
-    viewRoot.innerHTML = `<section class="card"><h3>暂无复盘记录</h3><p>先完成一次训练决策。</p><div class="card-actions"><button class="primary-button" id="reviewStartBtn" type="button">开始训练</button></div></section>`;
+    viewRoot.innerHTML = `<section class="card"><h3>暂无复盘记录</h3><p>先进入完整牌局训练，系统会记录每一街行动。</p><div class="card-actions"><button class="primary-button" id="reviewStartBtn" type="button">开始训练</button></div></section>`;
     document.getElementById("reviewStartBtn").addEventListener("click", () => startTraining(false, 0));
     return;
   }
   viewRoot.innerHTML = `<section class="review-list">${[...state.history].reverse().map((record) => `
     <article class="card review-card">
-      <h3>${record.title} | ${record.street}</h3>
+      <h3>${record.title} | ${record.street} ${record.streetStep || ""}</h3>
       <p>你的行动：${record.chosen}</p>
       <p>最佳线路：${record.best}　EV：${record.ev}</p>
       <p>错误类型：${record.errorType}　模式：${record.mode}</p>
@@ -544,16 +799,16 @@ function renderAnalytics() {
   setHeader("数据统计", "按街道、错误类型和正确率汇总。");
   viewRoot.innerHTML = `
     <section class="metric-row">
-      ${metric("已练手牌", state.history.length)}
+      ${metric("完整牌局", completedHands())}
+      ${metric("训练决策", state.history.length)}
       ${metric("正确率", `${accuracy()}%`)}
       ${metric("EV 汇总", totalEv())}
-      ${metric("主要漏洞", mainLeak())}
     </section>
     <section class="analytics-grid">
       ${studyCard("街道表现", ["翻前", "翻牌", "转牌", "河牌"].map(streetSummary).join("　"))}
       ${studyCard("错误类型", leakBreakdown())}
-      ${studyCard("训练建议", state.history.length ? "优先复盘出现次数最多的错误类型，再做专项训练。" : "先完成 5-10 手训练，统计页会显示主要漏洞。")}
-      ${studyCard("当前样本", `本地记录 ${state.history.length} 手，数据保存在浏览器 localStorage。`)}
+      ${studyCard("训练建议", state.history.length ? "优先复盘出现次数最多的错误类型，再做完整牌局连续训练。" : "先完成 2-3 手完整牌局，统计页会显示主要漏洞。")}
+      ${studyCard("当前样本", `本地记录 ${completedHands()} 手完整牌局、${state.history.length} 次决策。`)}
     </section>
   `;
 }
@@ -579,8 +834,31 @@ function metric(label, value) {
   return `<div class="metric-card"><span>${label}</span><strong>${value}</strong></div>`;
 }
 
+function flowFromSeed(seed) {
+  if (seed === 4) return 1;
+  if (seed === 1) return 1;
+  return 0;
+}
+
+function currentFlow() {
+  return handFlows[state.flowIndex % handFlows.length];
+}
+
 function currentHand() {
-  return hands[state.handIndex % hands.length];
+  const flow = currentFlow();
+  const spot = flow.spots[state.streetIndex % flow.spots.length];
+  return {
+    ...spot,
+    title: flow.title,
+    mode: spot.mode || flow.mode,
+    heroPosition: spot.heroPosition || flow.heroPosition,
+    heroCards: spot.heroCards || flow.heroCards,
+    stack: spot.stack || flow.stack
+  };
+}
+
+function completedHands() {
+  return completedHandsFrom(state.history);
 }
 
 function accuracy() {
