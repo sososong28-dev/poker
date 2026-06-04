@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中文 GTO 德扑训练器</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <div class="brand">
+        <div class="brand-mark">GTO</div>
+        <div>
+          <h1>中文 GTO 德扑训练器</h1>
+          <p>学习、训练、复盘、统计一体版</p>
+        </div>
+      </div>
+      <nav class="nav-grid" id="nav"></nav>
+      <section class="session-card">
+        <div>
+          <span>训练手牌</span>
+          <strong id="navHands">0</strong>
+        </div>
+        <div>
+          <span>正确率</span>
+          <strong id="navAccuracy">0%</strong>
+        </div>
+        <div>
+          <span>主要漏洞</span>
+          <strong id="navLeak">暂无</strong>
+        </div>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <h2 id="viewTitle">开始训练</h2>
+          <p id="viewSubtitle">选择一个训练入口，或直接进入当前推荐决策。</p>
+        </div>
+        <div class="top-actions">
+          <button class="ghost-button" id="resetSessionBtn" type="button">清空记录</button>
+          <button class="primary-button" id="quickStartBtn" type="button">开始训练</button>
+        </div>
+      </header>
+
+      <section id="viewRoot" class="view-root" aria-live="polite"></section>
+    </section>
+  </main>
+
+  <template id="trainingTemplate">
+    <div class="training-layout">
+      <section class="table-panel">
+        <canvas id="pokerCanvas" width="1040" height="620" aria-label="德扑训练桌"></canvas>
+      </section>
+      <aside class="advisor-panel">
+        <div class="advisor-header">
+          <span id="spotMode"></span>
+          <button class="ghost-button compact" id="toggleAdviceBtn" type="button"></button>
+        </div>
+        <h3 id="villainAction"></h3>
+        <p class="muted-line" id="handLine"></p>
+        <p class="muted-line" id="potLine"></p>
+        <div id="advisorContent"></div>
+      </aside>
+    </div>
+    <div class="action-row" id="actionRow"></div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

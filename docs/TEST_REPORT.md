@@ -1,18 +1,14 @@
 # 测试报告
 
-测试日期：2026-06-02
+测试日期：2026-06-04
+
+## Android APK 测试
 
 测试方式：Android 模拟器，使用 adb 安装、启动、UI 树检查、点击操作和 crash log 检查。
 
-## APK 检查
+APK 文件：
 
-- APK 文件：`apk/PokerTrainer-easygto-fusion-cn.apk`
-- 签名校验：v1 / v2 / v3 通过
-- 包名：`com.codex.pokertrainer`
-- 应用名：`中文 GTO 德扑训练器`
-- 启动 Activity：`com.codex.pokertrainer.MainActivity`
-
-## 功能测试
+`release/apk/PokerTrainer-easygto-fusion-cn.apk`
 
 通过项目：
 
@@ -33,5 +29,26 @@
 - 排行榜可打开。
 - crash log 为空。
 
-结论：当前融合版主流程和扩展入口均可用。
+## Web 版本测试
+
+测试方式：本地静态 HTTP 服务 + Node 校验。
+
+网页入口：
+
+`web/index.html`
+
+通过项目：
+
+- `web/app.js` 语法检查通过。
+- HTML 关键结构存在：`viewRoot`、`trainingTemplate`、`pokerCanvas`。
+- JS 关键模块存在：`renderTraining`、`renderRange`、`renderReview`、`renderAnalytics`、`drawTable`。
+- CSS 关键布局存在：`.training-layout`。
+- HTTP 静态加载通过：`/`、`/styles.css`、`/app.js` 均返回 200。
+
+限制：
+
+- 当前环境 Playwright 入口可见但缺少 `playwright-core` 依赖，未执行完整无头浏览器点击流。
+- 已完成静态结构、JS 语法和 HTTP 加载校验。
+
+结论：Android 版本完整流程通过；网页版本静态可运行性检查通过。
 
